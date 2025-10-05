@@ -97,6 +97,7 @@ services:
       - MEDIA_LAN_IP
       - PROX_LAN_IP
       - UNRAID_LAN_IP
+      - CONTROL_LAN_IP
     secrets:
       - cf_dns_api_token
       - basic_auth_credentials
