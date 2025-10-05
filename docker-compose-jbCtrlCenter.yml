@@ -12,8 +12,8 @@ networks:
 
 include:
   ###### SERVICES
-  - shared/socket-proxy.yml
-  - shared/crowdsec_agent.yml
+  - compose/shared/socket-proxy.yml
+  - compose/shared/crowdsec_agent.yml
 
     #Code Server/Infra  
-  - compose/gitea.yml
+  - compose/CtrlCenter/gitea.yml
