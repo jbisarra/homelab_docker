@@ -1,0 +1,19 @@
+services:
+  #Gitea - code hosting server & CI/CD
+  gitea:
+    image: docker.gitea.com/gitea:nightly
+    container_name: gitea
+    restart: unless-stopped
+    networks:
+      - default
+    ports:
+      - "$GITEA_WEB_PORT:3000"
+      - "$GITEA_SSH_PORT:22"
+    volumes:
+      - $DOCKERDIR/appdata/gitea/data:/data
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+
+

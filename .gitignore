@@ -1,0 +1,6 @@
+logs/
+secrets/
+appdata/
+*.env
+*.log
+
