@@ -1,0 +1,20 @@
+services:
+  beets:
+    image: lscr.io/linuxserver/beets:latest
+    container_name: beets
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["apps", "all"]
+    networks:
+      - default
+    ports:
+      - "$BEETS_PORT:8337"
+    volumes:
+      - ${DOCKERDIR}/appdata/beets:/config
+      - ${DOWNLOADSDIR}/torrent/complete:/downloads
+      - ${MEDIADIR}/Music:/music
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ

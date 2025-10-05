@@ -1,0 +1,19 @@
+services:
+  nicotine-plus:
+    image: ghcr.io/fletchto99/nicotine-plus-docker:latest
+    container_name: nicotine-plus
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["apps", "downloads", "all"]
+    network_mode: "service:gluetun"
+    volumes:
+      - ${DOCKERDIR}/appdata/nicotine-plus:/config
+      - ${DOWNLOADSDIR}/torrent/incomplete/music:/data/incomplete_downloads
+      - ${DOWNLOADSDIR}/torrent/compplete:/data/downloads
+      - ${MEDIADIR}/Music:/data/shared
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      LISTENING_PORT: 1080

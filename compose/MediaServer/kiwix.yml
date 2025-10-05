@@ -1,0 +1,20 @@
+services:
+  kiwix:
+    image: ghcr.io/kiwix/kiwix-serve:latest
+    container_name: kiwix
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["docs", "all"]
+    networks:
+      - default
+    ports:
+      - "$KIWIX_PORT:8080"
+    volumes:
+      - ${MEDIADIR}/Documents/zim:/data
+    command:
+      - '*.zim'
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ

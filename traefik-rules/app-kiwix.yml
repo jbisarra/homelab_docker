@@ -1,0 +1,19 @@
+http:
+  routers:
+    kiwix-rtr:
+      rule: "Host(`kiwix.{{env "DOMAINNAME"}}`)"
+      entryPoints: 
+        - websecure-internal
+        - websecure-external
+      middlewares:
+        - chain-no-auth@file
+      service: kiwix-svc
+      tls:
+        certResolver: dns-cloudflare
+        options: tls-opts@file
+  services:
+    kiwix-svc:
+      loadBalancer:
+        servers:
+          - url: "http://{{env "MEDIA_LAN_IP"}}:8081/"
+

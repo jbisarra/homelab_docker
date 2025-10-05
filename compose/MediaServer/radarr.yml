@@ -1,0 +1,24 @@
+services:
+  # Radarr - Movies Management
+  radarr:
+    image: lscr.io/linuxserver/radarr:develop
+    container_name: radarr
+    hostname: radarr
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "starr", "all"]
+    networks:
+      - default
+    ports:
+      - "$RADARR_PORT:7878"
+    volumes:
+      - $DOCKERDIR/appdata/radarr:/config
+      - $MEDIADIR/Movies:/movies
+      - $DOWNLOADSDIR:/downloads
+      - "/etc/localtime:/etc/localtime:ro"
+      - $DOCKERDIR/logs/radarr:/config/logs
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID

@@ -1,0 +1,18 @@
+http:
+  routers:
+    unraid-rtr:
+      rule: "Host(`unraid.{{env "DOMAINNAME"}}`)"
+      entryPoints: 
+        - websecure-internal
+      middlewares:
+        - chain-no-auth@file
+      service: unraid-svc
+      tls:
+        certResolver: dns-cloudflare
+        options: tls-opts@file
+  services:
+    unraid-svc:
+      loadBalancer:
+        servers:
+          - url: "http://{{env "UNRAID_LAN_IP"}}"
+

@@ -1,0 +1,22 @@
+http:
+  routers:
+    proxmox-rtr:
+      rule: "Host(`prox.{{env "DOMAINNAME"}}`)"
+      entryPoints: 
+        - websecure-internal
+      middlewares:
+        - chain-no-auth@file
+      service: proxmox-svc
+      tls:
+        certResolver: dns-cloudflare
+        options: tls-opts@file
+  services:
+    proxmox-svc:
+      loadBalancer:
+        serversTransport: "pve"
+        servers:
+          - url: "https://{{env "PROX_LAN_IP"}}:8006"
+  serversTransports:
+    pve:
+      insecureSkipVerify: true
+

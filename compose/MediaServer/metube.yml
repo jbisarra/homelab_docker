@@ -1,0 +1,20 @@
+services:
+  metube:
+    image: ghcr.io/alexta69/metube
+    container_name: metube
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports:
+      - "$METUBE_PORT:8081"
+    volumes:
+      - ${DOCKERDIR}/appdata/metube:/config
+      - ${MEDIADIR}/YoutubeArchive:/downloads
+      - $DOCKERDIR/logs/metube:/logs
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ

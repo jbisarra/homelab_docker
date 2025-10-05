@@ -1,0 +1,21 @@
+services:
+  # Overseerr - Media Requests and Discovery
+  overseer:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseer
+    hostname: overseer
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["apps", "all"]
+    networks:
+      - default
+    ports: 
+      - "$OVERSEER_PORT:5055"
+    volumes:
+      - $DOCKERDIR/appdata/overseer:/config
+      - $DOCKERDIR/logs/overseer:/logs
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ

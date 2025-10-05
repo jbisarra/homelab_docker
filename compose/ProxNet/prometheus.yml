@@ -1,0 +1,19 @@
+services:
+  # Prometheus - metircs collector
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["core", "all"]
+    networks:
+      - default
+    ports:
+      - "$PROMETHEUS_PORT:9090"
+    volumes:
+      - $DOCKERDIR/appdata/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID

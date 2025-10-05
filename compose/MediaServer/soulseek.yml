@@ -1,0 +1,26 @@
+services:
+  #Slskd - Soulseek client (Music Downloader)
+  slskd:
+    image: slskd/slskd
+    container_name: slskd
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["apps", "downloads", "all"]
+    network_mode: "service:gluetun"
+    volumes:
+      - $DOCKERDIR/appdata/slskd:/app
+      - $DOWNLOADSDIR/torrent:/downloads/torrent
+      - $MEDIADIR/Music:/music
+   #ports:
+      #HTTP Port
+   #  - "$SLSKD_PORT:5030"
+      #HTTPS Port
+   #  - "5031:5031"
+      
+   #   - "50300:50300"
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+      SLSKD_REMOTE_CONFIGURATION: true

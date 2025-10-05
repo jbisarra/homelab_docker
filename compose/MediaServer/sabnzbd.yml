@@ -1,0 +1,24 @@
+services:
+  # SABnzbd - Usenet Downloader
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    hostname: sabnzbd
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["apps", "downloads", "all"]
+    networks:
+      - default
+    ports:
+      - "$SABNZBD_PORT:8080"
+    volumes:
+      - $DOCKERDIR/appdata/sabnzbd:/config
+      - $DOWNLOADSDIR/nzb:/downloads
+      - "/etc/localtime:/etc/localtime:ro"
+      - $DOCKERDIR/logs/sabnzbd:/config/logs
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+      UMASK_SET: 002

@@ -1,0 +1,21 @@
+services:
+  suwayomi:
+    image: ghcr.io/suwayomi/suwayomi-server:preview
+    container_name: suwayomi
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports:
+      - "$SUWAYOMI_PORT:4567"
+    volumes:
+      - ${MEDIADIR}/Manga-Comics:/home/suwayomi/.local/share/Tachidesk/downloads
+      - ${DOCKERDIR}/appdata/suwayomi:/home/suwayomi/.local/share/Tachidesk
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      WEB_UI_ENABLED: true
+      WEB_UI_FLAVOR: 'WebUI'

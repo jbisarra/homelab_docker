@@ -1,0 +1,18 @@
+http:
+  routers:
+    portainer-rtr:
+      rule: "Host(`portainer.{{env "DOMAINNAME"}}`)"
+      entryPoints: 
+        - websecure-internal
+      middlewares:
+        - chain-no-auth@file
+      service: portainer-svc
+      tls:
+        certResolver: dns-cloudflare
+        options: tls-opts@file
+  services:
+    portainer-svc:
+      loadBalancer:
+        servers:
+          - url: "http://{{env "SERVER_LAN_IP"}}:9000"
+

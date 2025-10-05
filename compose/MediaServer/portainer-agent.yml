@@ -1,0 +1,15 @@
+services:
+  agent:
+    image: portainer/agent
+    container_name: portainer_agent
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["core", "all"]
+    networks:
+      - default
+    ports:
+      - "9001:9001"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes

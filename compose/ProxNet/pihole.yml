@@ -1,0 +1,36 @@
+services:
+  # Pi-Hole - DNS Server and AdBlocker
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["all", "core"]
+    networks: 
+      - default
+    cap_add:
+      - SYS_TIME
+      - NET_ADMIN
+      - SYS_NICE
+    ports:
+      # DNS Ports
+      - "53:53/tcp"
+      - "53:53/udp"
+      # DHCP Server
+     #- "67:67/udp"
+      # HTTP Port
+      - "$PIHOLE_PORT:80/tcp"
+      # HTTPS Port
+      - "$PIHOLE_HTTPS_PORT:443/tcp"
+    volumes:
+      - "$DOCKERDIR/appdata/pihole/etc:/etc/pihole"
+      - "$DOCKERDIR/logs/pihole:/var/log/pihole"
+    environment:
+      TZ: ${TZ}
+      FTLCONF_webserver_api_password: ${PIHOLE_WEB_PASSWORD}
+      FTLCONF_dns_listeningMode: 'all'
+      PIHOLE_DNS_: '$SERVER_LAN_IP#$UNBOUND_PORT'
+      CUSTOM_CACHE_SIZE: 0
+
+

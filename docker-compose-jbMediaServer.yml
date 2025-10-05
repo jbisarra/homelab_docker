@@ -1,0 +1,67 @@
+################ NETWORKS
+
+networks:
+  default:
+    driver: bridge
+  socket_proxy:
+    name: socket_proxy
+    driver: bridge
+    ipam:
+      config: 
+        - subnet: 192.168.91.0/24
+
+secrets:
+  plex_claim:
+    file: $DOCKERDIR/secrets/plex_claim
+  mariadb_root_password:
+    file: $DOCKERDIR/secrets/db_root_password
+  nextcloud_mariadb_password:
+    file: $DOCKERDIR/secrets/NC_db_password
+  nextcloud_admin_password:
+    file: $DOCKERDIR/secrets/NC_admin_password
+include:
+################### SERVICES
+  # Management/Remote Access
+  - compose/MediaServer/socket-proxy.yml
+  - compose/MediaServer/gluetun.yml 
+  - compose/MediaServer/portainer-agent.yml
+  - compose/MediaServer/watchtower.yml
+  - compose/MediaServer/crowdsec_media_local.yml
+  - compose/MediaServer/homarr.yml
+  - compose/MediaServer/tailscale.yml
+
+  # Databases
+  - compose/MediaServer/mariadb.yml
+  - compose/MediaServer/redis.yml
+
+  # External Services
+  - compose/MediaServer/overseer.yml
+  - compose/MediaServer/jellyfin.yml
+  - compose/MediaServer/plexms.yml
+  - compose/MediaServer/suwayomi.yml
+  - compose/MediaServer/metube.yml
+  - compose/MediaServer/kiwix.yml
+  - compose/MediaServer/karakeep.yml
+
+  # PVR  
+  - compose/MediaServer/sonarr.yml
+  - compose/MediaServer/radarr.yml
+  - compose/MediaServer/lidarr.yml
+    #- compose/MediaServer/musicdownloader.yml
+
+    # Support Media Apps   
+  - compose/MediaServer/bazarr.yml
+  - compose/MediaServer/prowlarr.yml
+  - compose/MediaServer/beets.yml
+  - compose/MediaServer/jackett.yml
+
+    # Download Clients
+  - compose/MediaServer/sabnzbd.yml
+  - compose/MediaServer/qbittorrent.yml
+  - compose/MediaServer/nicotine.yml
+
+    #Logging
+  - compose/MediaServer/tautulli.yml
+
+    #Documents
+  - compose/MediaServer/nextcloud.yml

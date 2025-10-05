@@ -1,0 +1,29 @@
+services:
+  # CrowdSec - Open-source & Collaborative IPS
+  crowdsec:
+    image: crowdsecurity/crowdsec:latest
+    container_name: crowdsec
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["all", "core"]
+    networks: 
+      - default
+    dns:
+      - 1.1.1.1
+    depends_on:
+      - 'traefik'
+    ports:
+      - "$CROWDSEC_PORT:8080" # Local API port
+      - "6060:6060" # Exposing metrics via Zerotier IP
+    volumes:
+      - $DOCKERDIR/logs:/logs:ro
+      - /var/log:/var/log:ro
+      - $DOCKERDIR/appdata/crowdsec/data:/var/lib/crowdsec/data
+      - $DOCKERDIR/appdata/crowdsec/config:/etc/crowdsec
+    environment:
+      TZ: $TZ
+      PGID: $PGID
+      PUID: $PUID
+      CUSTOM_HOSTNAME: $HOSTNAME
+      COLLECTIONS: "crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/whitelist-good-actors crowdsecurity/iptables crowdsecurity/linux fulljackz/proxmox crowdsecurity/sshd"

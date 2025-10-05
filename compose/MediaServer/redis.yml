@@ -1,0 +1,18 @@
+services:
+  redis:
+    image: docker.io/library/redis
+    container_name: redis
+    hostname: redis
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - default
+    ports:
+      - $REDIS_PORT:6379
+    volumes:
+      - $DOCKERDIR/appdata/redis:/data
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ

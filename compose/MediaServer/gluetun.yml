@@ -1,0 +1,29 @@
+services:
+  # Gluetun - VPN Client for Docker Containers
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["core", "all"]
+    networks:
+      - default
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    volumes: 
+      - $DOCKERDIR/appdata/gluetun:/gluetun
+    environment:
+      - TZ=$TZ
+      - VPN_SERVICE_PROVIDER=$VPN_SERVICE_PROVIDER
+      - OPENVPN_USER=$VPN_USER
+      - OPENVPN_PASSWORD=$VPN_PASSWORD
+    ports:
+      #QBittorrent Ports
+      - $QBITTORRENT_PORT:8181/tcp
+
+      #Nicotine-Plus Ports
+      - $NICOTINE_PORT:6080
+      - 1080:1080/tcp

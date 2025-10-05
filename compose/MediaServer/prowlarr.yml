@@ -1,0 +1,23 @@
+services:
+  # Prowlarr - Indexer Management
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    hostname: prowlarr
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "starr", "all"]
+    networks:
+      - default
+    ports:
+      - "$PROWLARR_PORT:9696"
+    volumes:
+      - $DOCKERDIR/appdata/prowlarr:/config
+      - $DOWNLOADSDIR:/downloads
+      - "/etc/localtime:/etc/localtime:ro"
+      - $DOCKERDIR/logs/prowlarr:/logs
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID

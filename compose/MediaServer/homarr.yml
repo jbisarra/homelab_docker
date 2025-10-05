@@ -1,0 +1,23 @@
+services:
+  # Homarr - Application Dashboard
+  homarr:
+    image: ghcr.io/homarr-labs/homarr:latest
+    container_name: homarr
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["starr", "all"]
+    networks:
+      - default
+      - socket_proxy
+    ports:
+      - "$HOMARR_PORT:7575"
+    volumes:
+      - $DOCKERDIR/appdata/homarr:/appdata
+      - $DOCKERDIR/logs/homarr:/logs
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+      SECRET_ENCRYPTION_KEY: $HOMARR_KEY

@@ -1,0 +1,21 @@
+services:
+  # Unbound - Recursive DNS Server
+  unbound:
+    container_name: unbound
+    image: mvance/unbound:latest
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["core", "all"]
+    networks:
+      - default
+    ports:
+      - "$UNBOUND_PORT:53/tcp"
+      - "$UNBOUND_PORT:53/udp"
+    volumes:
+      - $DOCKERDIR/appdata/unbound:/opt/unbound/etc/unbound
+      - $DOCKERDIR/logs/unbound:/logs
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID

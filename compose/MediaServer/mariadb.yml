@@ -1,0 +1,26 @@
+services:
+  mariadb:
+    container_name: mariadb
+    image: linuxserver/mariadb:latest
+    hostname: mariadb
+    restart: unless-stopped
+    networks:
+      - default
+    security_opt:
+      - no-new-privileges:true
+    ports: 
+      - $MARIADB_PORT:3306
+    volumes:
+      - $DOCKERDIR/appdata/mariadb/config:/etc/mysql
+      - $DOCKERDIR/appdata/mariadb/data:/var/lib/mysql
+    secrets:
+      - mariadb_root_password
+      - nextcloud_mariadb_password
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      MYSQL_USER: nextcloud
+      MYSQL_DATABASE: nextcloud
+      MYSQL_PASSWORD_FILE: /run/secrets/nextcloud_mariadb_password 
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mariadb_root_password

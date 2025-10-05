@@ -1,0 +1,27 @@
+services:
+  musicdownloader:
+    build: ../custom/musicdownloader
+    container_name: musicdownloader
+    restart: unless-stopped
+    networks:
+      - default
+    volumes:
+      - ${DOCKERDIR}/appdata/musicdownloader/data:/data
+      - ${DOWNLOADSDIR}/torrents/completed:/downloads
+      - ${MEDIADIR}/Music:/music
+      - ${DOCKERDIR}/appdata/beets:/config/beets
+      - ${DOCKERDIR}/appdata/musicdownloader/config:/config
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - JACKETT_URL=http://jackett:9117
+      - JACKETT_APIKEY=$JACKETT_API
+      - QB_URL=http://$SERVER_LAN_IP:$QBITTORRENT_PORT
+      - QB_USER=jbisarra
+      - QB_PASS=$QB_PASS
+      - MB_USER_AGENT=MyMusicBot/1.0
+    ports:
+      - "$MUSICDOWN_PORT:5000"
+    depends_on:
+      - jackett
+      - qbittorrent-vpn

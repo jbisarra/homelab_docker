@@ -1,0 +1,21 @@
+services:
+  # Watchtower - Container Monitoring and Management
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["core", "all"]
+    networks:
+      - default
+      - socket_proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+      WATCHTOWER_CLEANUP: true
+      WATCHTOWER_INCLUDE_RESTARTING: true
+      WATCHTOWER_POLL_INTERVAL: 36000

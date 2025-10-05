@@ -1,0 +1,23 @@
+services:
+  # MariaDB - SQL Database
+  mariadb:
+    container_name: mariadb
+    image: 'jc21/mariadb-aria:latest'
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["core", "all"]
+    networks:
+      - default
+    volumes:
+      - $DOCKERDIR/appdata/mariadb:/var/lib/mysql
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+      MYSQL_ROOT_PASSWORD: '$MYSQL_ROOT_PASSWORD'
+      MYSQL_DATABASE: '$MYSQL_DATABASE'
+      MYSQL_USER: '$MYSQL_USER'
+      MYSQL_PASSWORD: '$MYSQL_PASSWORD'
+      MARIADB_AUTO_UPGRAD: '1'
+

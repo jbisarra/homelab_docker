@@ -1,0 +1,19 @@
+services:
+  jackett:
+    image: linuxserver/jackett:latest
+    container_name: jackett
+    hostname: jackett
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports:
+      - "$JACKETT_PORT:9117"
+    volumes:
+      - ${DOCKERDIR}/appdata/jackett/config:/config
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ

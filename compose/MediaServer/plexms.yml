@@ -1,0 +1,41 @@
+services:
+  plexms:
+    # Plex Media Server - Media Streamer
+    container_name: plexms
+    image: lscr.io/linuxserver/plex:latest
+    hostname: plexms
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports: 
+      - "$PLEX_PORT:32400/tcp"
+      - "3005:3005/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+    volumes:
+      - ${DOCKERDIR}/appdata/plexms:/config
+      - ${MEDIADIR}/TVShows:/media/tvshows
+      - ${MEDIADIR}/Movies:/media/movies
+      - ${MEDIADIR}/Music:/media/music
+      - ${USERDIR}/docker/shared:/shared
+      - ${DOCKERDIR}/appdata/plexms/transcode:/transcode
+      - $DOCKERDIR/logs/plexms:/logs
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    group_add:
+      - "105"
+    environment:
+      TZ: $TZ
+      HOSTNAME: $PLEX_SERVER_NAME
+      PLEX_CLAIM_FILE: /run/secrets/plex_claim
+      PLEX_UID: $PUID
+      PLEX_GID: $PGID
+      ADVERTISE_IP: "http://$SERVER_IP:32400/"

@@ -1,0 +1,20 @@
+services:
+  komga:
+    image: gotson/komga
+    container_name: komga
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports:
+      - "$KOMGA_PORT:25600"
+    volumes:
+      - ${MEDIADIR}/Manga-Comics:/data
+      - ${DOCKERDIR}/appdata/komga:/config
+      - $DOCKERDIR/logs/komga:/logs
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ

@@ -1,0 +1,21 @@
+services:
+  #Tautulli - Plex Statistics and Monitoring
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    hostname: tautulli
+    security_opt:
+      - no-new-privileges:true
+    restart: "unless-stopped"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports:
+      - "$TAUTULLI_PORT:8181"
+    volumes:
+      - $DOCKERDIR/appdata/tautulli/config:/config
+      - $DOCKERDIR/logs/tautulli:/logs
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID

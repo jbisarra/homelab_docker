@@ -1,0 +1,24 @@
+services:
+  # Bazarr - Subtitle Management
+  bazarr: 
+    image: lscr.io/linuxserver/bazarr
+    container_name: bazarr
+    hostname: bazarr
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "starr", "all"]
+    networks:
+      - default
+    ports:
+      - "$BAZARR_PORT:6767"
+    volumes:
+      - $DOCKERDIR/appdata/bazarr:/config
+      - $MEDIADIR/TVShows:/tvshows
+      - $MEDIADIR/Movies:/movies
+      - $DOWNLOADSDIR:/downloads
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID

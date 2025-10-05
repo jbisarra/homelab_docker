@@ -1,0 +1,18 @@
+http:
+  routers:
+    sonarr-rtr:
+      rule: "Host(`sonarr.{{env "DOMAINNAME"}}`)"
+      entryPoints: 
+        - websecure-internal
+      middlewares:
+        - chain-no-auth@file
+      service: sonarr-svc
+      tls:
+        certResolver: dns-cloudflare
+        options: tls-opts@file
+  services:
+    sonarr-svc:
+      loadBalancer:
+        servers:
+          - url: "http://{{env "MEDIA_LAN_IP"}}:8989"
+

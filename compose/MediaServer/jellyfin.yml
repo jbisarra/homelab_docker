@@ -1,0 +1,30 @@
+services:
+  # Jellyfin - Media Server
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    hostname: jellyfin
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports:
+      - "$JELLYFIN_PORT:8096"
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    group_add:
+      - "105"
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      UMASK_SET: 022
+      TZ: $TZ
+    volumes: 
+      - $DOCKERDIR/appdata/jellyfin:/config
+      - $MEDIADIR/TVShows:/tvshows
+      - $MEDIADIR/Movies:/movies
+      - $MEDIADIR/Music:/music
+      - $DOCKERDIR/logs/jellyfin:/logs
+

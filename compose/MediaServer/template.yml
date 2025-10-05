@@ -1,0 +1,18 @@
+services:
+  cnt_name:
+    image: image_source
+    container_name: cnt_name
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports:
+      - "$cnt_name_port:int_port"
+    volumes:
+      - ${DOCKERDIR}/appdata/cnt_name:/config
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ

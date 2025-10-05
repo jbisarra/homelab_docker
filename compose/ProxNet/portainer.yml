@@ -1,0 +1,21 @@
+services:
+  # Portainer - WebUI for Containers
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["core", "all"]
+    networks:
+      - default
+      - socket_proxy
+    command: -H tcp://socket-proxy:2375
+    ports:
+      - "$PORTAINER_PORT:9000"
+    volumes:
+      - $DOCKERDIR/appdata/portainer/data:/data
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID

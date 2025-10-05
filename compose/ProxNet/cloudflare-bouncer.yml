@@ -1,0 +1,26 @@
+services:
+  # Crowdsec Bouncer - Cloudflare
+  cloudflare-bouncer:
+    image: crowdsecurity/cloudflare-worker-bouncer
+    container_name: cloudflare-bouncer
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    profiles: ["core", "all"]
+    networks:
+      - default
+    depends_on:
+      - crowdsec
+    ports:
+      - 2113:2113
+    dns:
+      - 1.1.1.1
+    volumes:
+      - $DOCKERDIR/appdata/cloudflare-bouncer/cfg.yaml:/etc/crowdsec/bouncers/crowdsec-cloudflare-worker-bouncer.yaml
+      - $DOCKERDIR/logs/cloudflare-bouncer:/logs
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      TZ: $TZ      

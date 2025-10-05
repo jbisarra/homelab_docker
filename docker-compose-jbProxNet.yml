@@ -1,0 +1,65 @@
+networks:
+  default:
+    driver: bridge
+  socket_proxy:
+    name: socket_proxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.91.0/24
+  t3_proxy:
+    name: t3_proxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.90.0/24    
+  wg:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+        driver: default
+        config: 
+          - subnet: 10.42.42.0/24
+          - subnet: fdcc:ad94:bacf:61a3::/64
+            
+secrets:
+  cf_dns_api_token:
+    file: $DOCKERDIR/secrets/cf_dns_api_token
+  basic_auth_credentials:
+    file: $DOCKERDIR/secrets/basic_auth_credentials
+  authelia_jwt_secret:
+    file: $DOCKERDIR/secrets/authelia_jwt_secret
+  authelia_session_secret:
+    file: $DOCKERDIR/secrets/authelia_session_secret
+  authelia_storage_encryption_key:
+    file: $DOCKERDIR/secrets/authelia_storage_encryption_key    
+  authelia_duo_integration_key:
+    file: $DOCKERDIR/secrets/authelia_duo_integration_key
+  authelia_duo_secret_key:
+    file: $DOCKERDIR/secrets/authelia_duo_secret_key    
+include:
+    # Maintenance Tools
+  - compose/ProxNet/socket-proxy.yml
+  - compose/ProxNet/portainer.yml
+  - compose/ProxNet/watchtower.yml
+    #- compose/ProxNet/portainer_agent.yml
+    
+    # DNS Server
+  - compose/ProxNet/pihole.yml
+  - compose/ProxNet/unbound.yml
+    
+    # Remote Access
+  - compose/ProxNet/tailscale.yml
+  - compose/ProxNet/traefik.yml
+
+    # Security
+  - compose/ProxNet/authelia.yml
+  - compose/ProxNet/crowdsec.yml
+  - compose/ProxNet/cloudflare-bouncer.yml
+  - compose/ProxNet/traefik-bouncer.yml
+
+    #Monitoring
+    #- compose/ProxNet/prometheus.yml
+
+
+  - compose/ProxNet/mariadb.yml
