@@ -66,3 +66,4 @@ include:
 
     #Documents
   - compose/MediaServer/nextcloud.yml
+  - compose/MediaServer/omnitools.yml
