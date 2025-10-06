@@ -42,6 +42,7 @@ include:
   - compose/shared/socket-proxy.yml
   - compose/ProxNet/portainer.yml
   - compose/shared/watchtower.yml
+  - compose/shared/gitea_runner.yml
     #- compose/ProxNet/portainer_agent.yml
     
     # DNS Server

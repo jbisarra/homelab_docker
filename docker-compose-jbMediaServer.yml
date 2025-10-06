@@ -29,6 +29,7 @@ include:
   - compose/shared/crowdsec_agent.yml
   - compose/MediaServer/homarr.yml
   - compose/shared/tailscale.yml
+  - compose/shared/gitea_runner.yml
 
   # Databases
   - compose/MediaServer/mariadb.yml
