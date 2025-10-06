@@ -1,0 +1,19 @@
+http:
+  routers:
+    omnitool-rtr:
+      rule: "Host(`omnitool.{{env "DOMAINNAME"}}`)"
+      entryPoints: 
+        - websecure-internal
+        - websecure-external
+      middlewares:
+        - chain-no-auth@file
+      service: omnitool-svc
+      tls:
+        certResolver: dns-cloudflare
+        options: tls-opts@file
+  services:
+    omnitool-svc:
+      loadBalancer:
+        servers:
+          - url: "http://{{env "MEDIA_LAN_IP"}}:85/"
+

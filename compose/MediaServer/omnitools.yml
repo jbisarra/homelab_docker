@@ -6,4 +6,4 @@ services:
     networks:
       - default
     ports:
-      - $OMNITOOLS_PORT:85
+      - $OMNITOOLS_PORT:80
