@@ -1,0 +1,18 @@
+services:
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["aps", "all"]
+    networks:
+      - socket_proxy
+    command: -H tcp://socket-proxy:2357
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      WATCHTOWER_CLEANUP: true
+      WATCHTOWER_INCLUDE_RESTARTING: true
+      WATCHTOWER_POLL_INTERVAL: 36000

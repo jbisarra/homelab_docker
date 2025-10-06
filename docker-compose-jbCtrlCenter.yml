@@ -14,6 +14,9 @@ include:
   ###### SERVICES
   - compose/shared/socket-proxy.yml
   - compose/shared/crowdsec_agent.yml
+  - compose/shared/gitea_runner.yml
+  - compose/shared/watchtower.yml
+  - compose/shared/tailscale.yml
 
     #Code Server/Infra  
   - compose/CtrlCenter/gitea.yml

@@ -22,13 +22,13 @@ secrets:
 include:
 ################### SERVICES
   # Management/Remote Access
-  - compose/MediaServer/socket-proxy.yml
+  - compose/shared/socket-proxy.yml
   - compose/MediaServer/gluetun.yml 
   - compose/MediaServer/portainer-agent.yml
-  - compose/MediaServer/watchtower.yml
-  - compose/MediaServer/crowdsec_media_local.yml
+  - compose/shared/watchtower.yml
+  - compose/shared/crowdsec_agent.yml
   - compose/MediaServer/homarr.yml
-  - compose/MediaServer/tailscale.yml
+  - compose/shared/tailscale.yml
 
   # Databases
   - compose/MediaServer/mariadb.yml

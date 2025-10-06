@@ -39,9 +39,9 @@ secrets:
     file: $DOCKERDIR/secrets/authelia_duo_secret_key    
 include:
     # Maintenance Tools
-  - compose/ProxNet/socket-proxy.yml
+  - compose/shared/socket-proxy.yml
   - compose/ProxNet/portainer.yml
-  - compose/ProxNet/watchtower.yml
+  - compose/shared/watchtower.yml
     #- compose/ProxNet/portainer_agent.yml
     
     # DNS Server
@@ -49,7 +49,7 @@ include:
   - compose/ProxNet/unbound.yml
     
     # Remote Access
-  - compose/ProxNet/tailscale.yml
+  - compose/shared/tailscale.yml
   - compose/ProxNet/traefik.yml
 
     # Security
