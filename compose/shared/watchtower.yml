@@ -7,8 +7,10 @@ services:
     restart: "always"
     profiles: ["aps", "all"]
     networks:
-      - socket_proxy
-    command: -H tcp://socket-proxy:2357
+      - default
+        #command: -H tcp://socket-proxy:2357
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       PUID: $PUID
       PGID: $PGID
