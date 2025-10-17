@@ -1,0 +1,18 @@
+services:
+  navidrome:
+    container_name: nanidrome
+    image: deluan/navidrome:latest
+    ports:
+      - "$NAVIDROME_PORT:4533"
+    restart: unless-stopped
+    volumes:
+      - $DOCKERDIR/appdata/navidrome:/data
+      - $MEDIADIR/Music:/music:ro
+    enviornment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      ND_IGNOREDARTICLES: "The El La Los Las Le Les Os As O A"
+      ND_COVERARTPRIORITY: "albumart.*, cover.*, folder.*, front.*, embedded, external"
+      ND_ADDRESS: 192.168.0.107
+      ND_BASEURL: https://navidrome.vzlabmux.org

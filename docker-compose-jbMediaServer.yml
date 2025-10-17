@@ -43,6 +43,7 @@ include:
   - compose/MediaServer/metube.yml
   - compose/MediaServer/kiwix.yml
   - compose/MediaServer/karakeep.yml
+  - compose/MediaServer/navidrome.yml
 
   # PVR  
   - compose/MediaServer/sonarr.yml
