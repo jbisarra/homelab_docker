@@ -60,7 +60,7 @@ include:
     # Download Clients
   - compose/MediaServer/sabnzbd.yml
   - compose/MediaServer/qbittorrent.yml
-  - compose/MediaServer/nicotine.yml
+    #- compose/MediaServer/nicotine.yml
 
     #Logging
   - compose/MediaServer/tautulli.yml
@@ -68,3 +68,4 @@ include:
     #Documents
   - compose/MediaServer/nextcloud.yml
   - compose/MediaServer/omnitools.yml
+  - compose/MediaServer/ic_design.yml

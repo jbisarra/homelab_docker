@@ -1,0 +1,20 @@
+services:
+  ##IIC-OSIC Tools - Open EDA IC Design
+  iic-osic-tools:
+    container_name: iic-osic-tools
+    image: hpretl/iic-osic-tools:latest
+    restart: unless-stopped
+    networks:
+      - default
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - $DOCKERDIR/appdata/iic-osic-tools:/config
+    ports:
+      - $IIC_PORT:80
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - DESIGNS=/media/ChipProjects
+      - WEBSERVER_PORT=$IIC_PORT

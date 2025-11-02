@@ -8,7 +8,7 @@ services:
     volumes:
       - $DOCKERDIR/appdata/navidrome:/data
       - $MEDIADIR/Music:/music:ro
-    enviornment:
+    environment:
       PUID: $PUID
       PGID: $PGID
       TZ: $TZ
