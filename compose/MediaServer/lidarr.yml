@@ -1,7 +1,7 @@
 services:
   # Lidarr - Music Management
   lidarr:
-    image: lscr.io/linuxserver/lidarr:develop
+    image: ghcr.io/hotio/lidarr:pr-plugins
     container_name: lidarr
     security_opt:
       - no-new-privileges:true

@@ -1,0 +1,19 @@
+services:
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:latest
+    container_name: obsidian
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports:
+      - "$OBSIDIAN_PORT:3001"
+    volumes:
+      - ${DOCKERDIR}/appdata/obsidian:/config
+      - ${MEDIADIR}/Documents/Obsidian:/notes
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
