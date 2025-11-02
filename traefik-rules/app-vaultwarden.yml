@@ -1,0 +1,19 @@
+http:
+  routers:
+    vaultwarden-rtr:
+      rule: "Host(`vaultwarden.{{env "DOMAINNAME"}}`)"
+      entryPoints: 
+        - websecure-internal
+        - websecure-external
+      middlewares:
+        - chain-no-auth@file
+      service: vaultwarden-svc
+      tls:
+        certResolver: dns-cloudflare
+        options: tls-opts@file
+  services:
+    vaultwarden-svc:
+      loadBalancer:
+        servers:
+          - url: "http://{{env "MEDIA_LAN_IP"}}:8000/"
+
