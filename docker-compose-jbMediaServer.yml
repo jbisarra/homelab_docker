@@ -69,3 +69,4 @@ include:
   - compose/MediaServer/nextcloud.yml
   - compose/MediaServer/omnitools.yml
   - compose/MediaServer/ic_design.yml
+  - compose/MediaServer/obsidian.yml
