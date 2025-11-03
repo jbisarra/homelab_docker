@@ -45,6 +45,7 @@ include:
   - compose/MediaServer/karakeep.yml
   - compose/MediaServer/navidrome.yml
   - compose/MediaServer/vaultwarden.yml
+  - compose/MediaServer/freshrss.yml
 
   # PVR  
   - compose/MediaServer/sonarr.yml
