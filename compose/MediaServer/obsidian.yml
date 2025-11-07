@@ -2,6 +2,7 @@ services:
   obsidian:
     image: lscr.io/linuxserver/obsidian:latest
     container_name: obsidian
+      #user: 33:33
     security_opt:
       - no-new-privileges:true
     restart: "always"
@@ -12,8 +13,8 @@ services:
       - "$OBSIDIAN_PORT:3001"
     volumes:
       - ${DOCKERDIR}/appdata/obsidian:/config
-      - ${MEDIADIR}/Documents/Obsidian:/notes
+      - ${MEDIADIR}/Documents/nextcloud/hueylaforet/files/Obsidian:/notes
     environment:
-      PUID: $PUID
-      PGID: $PGID
+      PUID: 33
+      PGID: 33
       TZ: $TZ

@@ -1,0 +1,18 @@
+services:
+  agregarr:
+    image: agregarr/agregarr:latest
+    container_name: agregarr
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports:
+      - "$AGREGARR_PORT:7171"
+    volumes:
+      - ${DOCKERDIR}/appdata/agregarr:/app/config
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ

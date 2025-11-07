@@ -1,18 +1,20 @@
 services:
-  mariadb:
-    container_name: mariadb
-    image: linuxserver/mariadb:latest
-    hostname: mariadb
-    restart: unless-stopped
-    networks:
-      - default
+  nextcloud_db:
+    image: mariadb:10.5
+    container_name: nextcloud_db
+    hostname: nextcloud_db
     security_opt:
       - no-new-privileges:true
-    ports: 
-      - $MARIADB_PORT:3306
+    restart: "unless-stopped"
+    profiles: ["media", "all"]
+      #command: --transaction-isolation=READ_COMMITTED --log-bin=msqyld-bin --binlog-format=ROW
+    networks:
+      - default
+    ports:
+      - "$MARIADB_PORT:3306"
     volumes:
-      - $DOCKERDIR/appdata/mariadb/config:/etc/mysql
-      - $DOCKERDIR/appdata/mariadb/data:/var/lib/mysql
+      - ${DOCKERDIR}/appdata/db-nextcloud/data:/var/lib/mysql
+      - ${DOCKERDIR}/appdata/db-nextcloud/config:/etc/mysql
     secrets:
       - mariadb_root_password
       - nextcloud_mariadb_password
@@ -20,7 +22,8 @@ services:
       PUID: $PUID
       PGID: $PGID
       TZ: $TZ
-      MYSQL_USER: nextcloud
-      MYSQL_DATABASE: nextcloud
-      MYSQL_PASSWORD_FILE: /run/secrets/nextcloud_mariadb_password 
+      MYSQL_USER: nc-user
+      MYSQL_DATABASE: db-nextcloud
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mariadb_root_password
+      MYSQL_PASSWORD_FILE: /run/secrets/nextcloud_mariadb_password
+
