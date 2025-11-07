@@ -47,6 +47,7 @@ include:
   - compose/MediaServer/vaultwarden.yml
   - compose/MediaServer/freshrss.yml
 
+
   # PVR  
   - compose/MediaServer/sonarr.yml
   - compose/MediaServer/radarr.yml
@@ -58,6 +59,7 @@ include:
   - compose/MediaServer/prowlarr.yml
   - compose/MediaServer/beets.yml
   - compose/MediaServer/jackett.yml
+  - compose/MediaServer/agregarr.yml
 
     # Download Clients
   - compose/MediaServer/sabnzbd.yml
