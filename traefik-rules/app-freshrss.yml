@@ -1,0 +1,19 @@
+http:
+  routers:
+    freshrss-rtr:
+      rule: "Host(`freshrss.{{env "DOMAINNAME"}}`)"
+      entryPoints: 
+        - websecure-internal
+        - websecure-external
+      middlewares:
+        - chain-no-auth@file
+      service: freshrss-svc
+      tls:
+        certResolver: dns-cloudflare
+        options: tls-opts@file
+  services:
+    freshrss-svc:
+      loadBalancer:
+        servers:
+          - url: "http://{{env "MEDIA_LAN_IP"}}:9000"
+
