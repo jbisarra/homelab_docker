@@ -1,0 +1,19 @@
+services:
+  tidarr:
+    image: cstaelen/tidarr
+    container_name: tidarr
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["media", "all"]
+    networks:
+      - default
+    ports:
+      - "$TIDARR_PORT:8484"
+    volumes:
+      - ${DOCKERDIR}/appdata/tidarr/config:/home/app/standalone/shared
+      - ${DOWNLOADSDIR}/misc/tidarr:/home/app/standalone/library
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ

@@ -64,6 +64,7 @@ include:
     # Download Clients
   - compose/MediaServer/sabnzbd.yml
   - compose/MediaServer/qbittorrent.yml
+  - compose/MediaServer/tidarr.yml
     #- compose/MediaServer/nicotine.yml
 
     #Logging
