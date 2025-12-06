@@ -44,7 +44,6 @@ include:
   - compose/MediaServer/kiwix.yml
   - compose/MediaServer/karakeep.yml
   - compose/MediaServer/navidrome.yml
-  - compose/MediaServer/vaultwarden.yml
   - compose/MediaServer/freshrss.yml
 
 
