@@ -20,3 +20,6 @@ include:
 
     #Code Server/Infra  
   - compose/CtrlCenter/gitea.yml
+
+    #General Management
+  - compose/CtrlCenter/vaultwarden.yml
