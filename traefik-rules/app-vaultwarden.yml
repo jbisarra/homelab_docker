@@ -4,7 +4,6 @@ http:
       rule: "Host(`vaultwarden.{{env "DOMAINNAME"}}`)"
       entryPoints: 
         - websecure-internal
-        - websecure-external
       middlewares:
         - chain-no-auth@file
       service: vaultwarden-svc

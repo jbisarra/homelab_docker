@@ -6,7 +6,7 @@ http:
         - websecure-internal
         - websecure-external
       middlewares:
-        - chain-no-auth@file
+        - chain-authelia@file
       service: omnitool-svc
       tls:
         certResolver: dns-cloudflare
