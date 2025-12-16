@@ -19,6 +19,10 @@ secrets:
     file: $DOCKERDIR/secrets/NC_db_password
   nextcloud_admin_password:
     file: $DOCKERDIR/secrets/NC_admin_password
+  romm_auth_secret:
+    file: $DOCKERDIR/secrets/romm_auth_secret
+  romm_db_password:
+    file: $DOCKERDIR/secrets/romm_db_password
 include:
 ################### SERVICES
   # Management/Remote Access
@@ -45,7 +49,7 @@ include:
   - compose/MediaServer/karakeep.yml
   - compose/MediaServer/navidrome.yml
   - compose/MediaServer/freshrss.yml
-
+  - compose/MediaServer/romm.yml
 
   # PVR  
   - compose/MediaServer/sonarr.yml

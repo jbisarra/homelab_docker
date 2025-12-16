@@ -1,0 +1,20 @@
+http:
+  routers:
+    romm-rtr:
+      rule: "Host(`romm.{{env "DOMAINNAME"}}`)"
+      entryPoints: 
+        - websecure-internal
+        - websecure-external
+      middlewares:
+        - chain-no-auth@file
+      service: romm-svc
+      tls:
+        certResolver: dns-cloudflare
+        options: tls-opts@file
+  services:
+    romm-svc:
+      loadBalancer:
+        servers:
+          - url: "http://{{env "MEDIA_LAN_IP"}}:4040/"
+        passHostHeader: true
+

@@ -1,18 +1,62 @@
 services:
-  cnt_name:
-    image: image_source
-    container_name: cnt_name
+  romm:
+    image: rommapp/romm:latest
+    container_name: romm
     security_opt:
       - no-new-privileges:true
-    restart: "always"
+    restart: "unless-stopped"
     profiles: ["media", "all"]
     networks:
       - default
     ports:
-      - "$cnt_name_port:int_port"
+      - "$ROMM_PORT:8080"
     volumes:
-      - ${DOCKERDIR}/appdata/cnt_name:/config
+      - ${DOCKERDIR}/appdata/romm/resources:/romm/resources
+      - ${DOCKERDIR}/appdata/redis:/redis-data
+      - ${MEDIADIR}/Games/Emulation/:/romm/library
+      - ${MEDIADIR}/Games/Emulation/Saves:/romm/assets
+      - ${DOCKERDIR}/appdata/romm/config:/romm/config
+    secrets:
+      - romm_auth_secret
+      - romm_db_password
     environment:
       PUID: $PUID
       PGID: $PGID
       TZ: $TZ
+      DB_HOST: romm-db
+      DB_NAME: romm
+      DB_USER: romm-user
+      DB_PASSWD: /run/secrets/romm_db_password
+      REDIS_HOST: redis
+      ROMM_AUTH_SECRET_KEY: /run/secrets/romm_auth_secret
+        #SCREENSCRAPER_USER:
+        #SCREENSCRAPER_PASSWORD:
+        #RETROACHIEVEMENTS_API_KEY:
+      STEAMGRIDDB_API_KEY: "e5ac63730ea8170ec17ac4b48e09abf0"
+      HASHEOUS_API_ENABLED: true
+    depends_on:
+      romm-db:
+        condition: service_healthy
+        restart: true
+
+  romm-db:
+    image: mariadb:latest
+    container_name: romm-db
+    restart: unless-stopped
+    secrets:
+      - mariadb_root_password
+      - romm_db_password
+    volumes:
+      - $DOCKERDIR/appdata/db-romm:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: /run/secrets/mariadb_root_password
+      MARIADB_DATABASE: romm
+      MARIADB_USER: romm-user
+      MARIADB_PASSWORD: /run/secrets/romm_db_password
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      start_period: 30s
+      start_interval: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
