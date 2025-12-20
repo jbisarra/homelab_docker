@@ -22,9 +22,9 @@ services:
       - "32414:32414/udp"
     volumes:
       - ${DOCKERDIR}/appdata/plexms:/config
-      - ${MEDIADIR}/TVShows:/media/tvshows
-      - ${MEDIADIR}/Movies:/media/movies
-      - ${MEDIADIR}/Music:/media/music
+      - ${MEDIADIR}/TVShows:/media/tvshows:ro
+      - ${MEDIADIR}/Movies:/media/movies:ro
+      - ${MEDIADIR}/Music:/media/music:ro
       - ${USERDIR}/docker/shared:/shared
       - ${DOCKERDIR}/appdata/plexms/transcode:/transcode
       - $DOCKERDIR/logs/plexms:/logs
