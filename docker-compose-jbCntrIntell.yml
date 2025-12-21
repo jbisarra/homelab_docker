@@ -1,0 +1,22 @@
+###### NETWORKS
+
+networks:
+  default:
+    driver: bridge
+  socket_proxy:
+    name: socket_proxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.91.0/24
+
+include:
+  ###### SERVICES
+  - compose/shared/socket-proxy.yml
+  - compose/shared/crowdsec_agent.yml
+  - compose/shared/gitea_runner.yml
+  - compose/shared/watchtower.yml
+  - compose/shared/tailscale.yml
+
+  - compose/CntrIntell/ollama.yml
+  - compose/CntrIntell/openwebui.yml

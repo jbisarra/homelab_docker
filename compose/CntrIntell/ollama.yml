@@ -1,0 +1,28 @@
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["AI", "all"]
+    networks:
+      - default
+    ports:
+      - "$OLLAMA_PORT:11434"
+    volumes:
+      - ${DOCKERDIR}/appdata/ollama:/root/.ollama
+      - ${DOCKERDIR}/appdata/ollama/models:/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: "nvidia"
+              count: 1
+              capabilities: [ gpu]
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      NVIDIA_VISIBLE_DEVICES: 1
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility

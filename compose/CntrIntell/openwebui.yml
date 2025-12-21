@@ -1,0 +1,21 @@
+services:
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:cuda
+    container_name: open-webui
+    security_opt:
+      - no-new-privileges:true
+    restart: "always"
+    profiles: ["AI", "all"]
+    networks:
+      - default
+    ports:
+      - "$OPENWEBUI_PORT:8080"
+    volumes:
+      - ${DOCKERDIR}/appdata/openwebui:/app/backend/data 
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      OLLAMA_BASE_URL: http://ollama:$OLLAMA_PORT
+    depends_on:
+      - ollama    
